@@ -3,7 +3,6 @@ package com.test.Practica20240730JDMR.Modelos;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
