@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,7 +45,7 @@ public class ProductoJDMRController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        return "productos/index"; 
+        return "productos/index";
     }
 
     @GetMapping("/create")
@@ -61,37 +62,36 @@ public class ProductoJDMRController {
         }
 
         productoService.crearOEditar(productoJDMR);
-        attributes.addFlashAttribute("msg", "Grupo creado correctamente");
+        attributes.addFlashAttribute("msg", "Producto creado correctamente");
         return "redirect:/";
     }
 
-    /*
-     * @GetMapping("/details/{id}")
-     * public String details(@PathVariable("id") Integer id, Model model){
-     * Grupo grupo = grupoService.buscarPorId(id).get();
-     * model.addAttribute("grupo", grupo);
-     * return "grupo/details";
-     * }
-     * 
-     * @GetMapping("/edit/{id}")
-     * public String edit(@PathVariable("id") Integer id, Model model){
-     * Grupo grupo = grupoService.buscarPorId(id).get();
-     * model.addAttribute("grupo", grupo);
-     * return "grupo/edit";
-     * }
-     * 
-     * @GetMapping("/remove/{id}")
-     * public String remove(@PathVariable("id") Integer id, Model model){
-     * Grupo grupo = grupoService.buscarPorId(id).get();
-     * model.addAttribute("grupo", grupo);
-     * return "grupo/delete";
-     * }
-     * 
-     * @PostMapping("/delete")
-     * public String delete(Grupo grupo, RedirectAttributes attributes){
-     * grupoService.eliminarPorId(grupo.getId());
-     * attributes.addFlashAttribute("msg", "Grupo eliminado correctamente");
-     * return "redirect:/grupos";
-     * }
-     */
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, Model model) {
+        ProductoJDMR productoJDMR = productoService.buscarPorId(id).get();
+        model.addAttribute("productoJDMR", productoJDMR);
+        return "productos/edit";
+    }
+
+    @GetMapping("/details/{id}")
+    public String details(@PathVariable("id") Long id, Model model) {
+        ProductoJDMR productoJDMR = productoService.buscarPorId(id).get();
+        model.addAttribute("productoJDMR", productoJDMR);
+        return "productos/details";
+    }
+
+    @GetMapping("/remove/{id}")
+    public String remove(@PathVariable("id") Long id, Model model) {
+        ProductoJDMR productoJDMR = productoService.buscarPorId(id).get();
+        model.addAttribute("productoJDMR", productoJDMR);
+        return "productos/delete";
+    }
+
+    @PostMapping("/delete")
+    public String delete(ProductoJDMR productoJDMR, RedirectAttributes attributes) {
+        productoService.eliminarPorId(productoJDMR.getId());
+        attributes.addFlashAttribute("msg", "Producto eliminado correctamente");
+        return "redirect:/";
+    }
+
 }
